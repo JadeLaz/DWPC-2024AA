@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
 
-    mode: "production",
+    mode: "development",
 
     entry: "./client/index.js",
 
@@ -14,4 +14,13 @@ module.exports = {
 
         publicPath: "/"
     },
+
+    devServer: {
+
+        static: path.join(__dirname, "public"),
+
+        port: 8000,
+
+        host: "0.0.0.0"
+    }
 };
