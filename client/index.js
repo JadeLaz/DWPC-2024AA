@@ -1,3 +1,6 @@
+import './styles/style.css'
+
+
 console.log("🎉 Client Server Working powered by webpack");
 
 let show = (msg="No message given") => {

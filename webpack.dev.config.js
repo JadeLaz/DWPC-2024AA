@@ -1,3 +1,5 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 const path = require('path');
 
 module.exports = {
@@ -48,7 +50,25 @@ module.exports = {
                         }
                     }
                 ]
-            }
-        ]
-    }
+            },
+            
+            {
+                test: /\.css$/,
+                use: [
+
+                    MiniCssExtractPlugin.loader,
+
+                    "css-loader"
+                ]
+            },
+        ],
+    },
+
+    plugins: [
+
+        new MiniCssExtractPlugin({
+
+            filename: "styles/app.css"
+        })
+    ]
 };

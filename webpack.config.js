@@ -1,3 +1,6 @@
+const { plugins } = require('@babel/preset-env/lib/plugins-compat-data');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 const path = require('path');
 
 module.exports = {
@@ -19,6 +22,7 @@ module.exports = {
         rules: [
 
             {
+
                 test:/\.js$/,
                 exclude: /node_modules/,
                 use: [
@@ -39,7 +43,25 @@ module.exports = {
                         }
                     }
                 ]
+            },
+
+            {
+                test: /\.css$/,
+                use: [
+
+                    MiniCssExtractPlugin.loader,
+
+                    "css-loader"
+                ]
             }
         ]
-    }
+    },
+
+    plugins: [
+
+        new MiniCssExtractPlugin({
+
+            filename: "styles/app.css"
+        })
+    ]
 };
