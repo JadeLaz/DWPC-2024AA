@@ -7,7 +7,39 @@ import logger from 'morgan';
 import indexRouter from './routes/index';
 import usersRouter from'./routes/users';
 
+import  webpack  from 'webpack';
+import WebpackDevMiddleware from 'webpack-dev-middleware';
+import WebpackHotMiddleware from 'webpack-hot-middleware';
+
+import webpackConfig from '../webpack.dev.config';
+
 var app = express();
+
+const nodeEviroment = process.env.NODE_ENV || 'production';
+
+if(nodeEviroment == 'developement'){
+  console.log("Ejecutando en modo desarrollo 🛠️");
+
+  webpackConfig.mode = 'development';
+
+  webpackConfig.devServer.port = process.env.PORT;
+
+  webpackConfig.entry = [
+    'webpack-hot-middleware/client?reload=true&timeout=1000',
+  ];
+
+  webpackConfig.plugins.push[new webpack.HotModuleReplacementPlugin()];
+
+  const bundle = webpack(webpackConfig);
+
+  app.use(WebpackDevMiddleware(bundle, {
+    publicPath: webpackConfig.output.publicPath
+  }));
+
+  app.use(WebpackHotMiddleware(bundle));
+}else{
+  console.log("Ejecutando en modo produccion 🚀");
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

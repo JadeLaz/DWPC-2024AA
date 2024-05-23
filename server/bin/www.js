@@ -8,7 +8,7 @@ import app from '../app';
 //var debug = require('debug')('dwpc-2024aa:server');
 import debugLib from 'debug';
 import http from 'http';
-const debug = debugLib('dwpc-2024aa:server')
+const debug = debugLib('iserver')
 
 /**
  * Get port from environment and store in Express.
