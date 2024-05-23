@@ -22,3 +22,4 @@ async function asyncCall() {
 }
 
 asyncCall();
+show();
