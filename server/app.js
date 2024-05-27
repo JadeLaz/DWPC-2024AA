@@ -1,24 +1,23 @@
-import createError from'http-errors';
-import express from'express';
+import createError from 'http-errors';
+import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
-import indexRouter from './routes/index';
-import usersRouter from'./routes/users';
-
-import  webpack  from 'webpack';
+import webpack from 'webpack';
 import WebpackDevMiddleware from 'webpack-dev-middleware';
 import WebpackHotMiddleware from 'webpack-hot-middleware';
+import usersRouter from './routes/users';
+import indexRouter from './routes/index';
 
 import webpackConfig from '../webpack.dev.config';
 
-var app = express();
+const app = express();
 
 const nodeEviroment = process.env.NODE_ENV || 'production';
 
-if(nodeEviroment == 'developement'){
-  console.log("Ejecutando en modo desarrollo 🛠️");
+if (nodeEviroment === 'developement') {
+  console.log('Ejecutando en modo desarrollo 🛠️');
 
   webpackConfig.mode = 'development';
 
@@ -32,13 +31,15 @@ if(nodeEviroment == 'developement'){
 
   const bundle = webpack(webpackConfig);
 
-  app.use(WebpackDevMiddleware(bundle, {
-    publicPath: webpackConfig.output.publicPath
-  }));
+  app.use(
+    WebpackDevMiddleware(bundle, {
+      publicPath: webpackConfig.output.publicPath,
+    }),
+  );
 
   app.use(WebpackHotMiddleware(bundle));
-}else{
-  console.log("Ejecutando en modo produccion 🚀");
+} else {
+  console.log('Ejecutando en modo produccion 🚀');
 }
 
 // view engine setup
@@ -56,12 +57,12 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
